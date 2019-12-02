@@ -1,26 +1,18 @@
 package com.example.producer.service
 
 import com.example.producer.dto.MessageDto
-import com.fasterxml.jackson.core.JsonProcessingException
-import com.fasterxml.jackson.databind.ObjectMapper
-import org.apache.kafka.common.requests.FetchMetadata.log
+import org.slf4j.LoggerFactory
 import org.springframework.kafka.core.KafkaTemplate
 import org.springframework.stereotype.Service
 
 @Service
-class MessageServiceImpl(private val kafkaMessageTemplate: KafkaTemplate<Long, MessageDto>,
-                         private val objectMapper: ObjectMapper) : MessageService {
+class MessageServiceImpl(private val kafkaTemplate: KafkaTemplate<String, MessageDto>) : MessageService {
+
+    private val logger = LoggerFactory.getLogger(MessageServiceImpl::class.java)
 
     override fun send(dto: MessageDto) {
-        log.info("<= sending {}", writeValueAsString(dto))
-        kafkaMessageTemplate.send(KAFKA_TOPIC, dto)
-    }
-
-    private fun writeValueAsString(dto: MessageDto): String = try {
-        objectMapper.writeValueAsString(dto)
-    } catch (e: JsonProcessingException) {
-        e.printStackTrace()
-        throw RuntimeException("Writing value to JSON failed: $dto")
+        logger.info(String.format("#### -> Producing message -> {}", dto));
+        kafkaTemplate.send(KAFKA_TOPIC, dto)
     }
 
     private companion object {

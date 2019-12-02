@@ -7,7 +7,6 @@ import org.springframework.kafka.annotation.EnableKafka
 
 @SpringBootApplication
 @EnableKafka
-@PropertySource("classpath:kafka.properties")
 class ConsumerApplication
 
 fun main(args: Array<String>) {

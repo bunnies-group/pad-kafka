@@ -1,6 +1,4 @@
 package com.example.consumer.dto
 
-class MessageDto(
-        val author: String,
-        val message: String
-)
+data class MessageDto(val author: String,
+                      val text: String)

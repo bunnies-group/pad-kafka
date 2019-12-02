@@ -5,7 +5,7 @@
 3. Run Zookeeper
 `./apache-zookeeper-3.5.6-bin/bin/zkServer.sh start`
 4. Run Apache Kafka server
-`./bin/kafka-server-start.sh ./config/server.properties `
+`./bin/kafka-server-start.sh ./config/server.properties`
 5. Create `server.message` topic
 `./bin/kafka-topics.sh --create --zookeeper localhost:2181 --partitions 1 --replication-factor 1 --topic server.message`
 6. Make POST request with body `{ "author": "foo", "message": "bar" }` to `http://localhost:9000/message`

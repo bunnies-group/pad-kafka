@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/message")
-class MessageController @Autowired constructor(private val messageService: MessageService) {
+@RequestMapping("/messages")
+class MessagesController(private val messageService: MessageService) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

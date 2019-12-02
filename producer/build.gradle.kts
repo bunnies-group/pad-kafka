@@ -1,10 +1,13 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("org.springframework.boot") version "2.2.1.RELEASE"
-    id("io.spring.dependency-management") version "1.0.8.RELEASE"
-    kotlin("jvm") version "1.3.50"
-    kotlin("plugin.spring") version "1.3.50"
+    id("org.springframework.boot")
+    id("io.spring.dependency-management")
+
+    kotlin("jvm")
+    kotlin("plugin.spring")
+
+    id("com.google.cloud.tools.jib")
 }
 
 java.sourceCompatibility = JavaVersion.VERSION_1_8
@@ -19,10 +22,19 @@ configurations {
     }
 }
 
+tasks.build {
+    dependsOn.add(tasks.jibDockerBuild)
+}
+
+tasks.jibDockerBuild {
+    jib {
+        container.ports = listOf("8080")
+    }
+}
+
 repositories {
     mavenCentral()
 }
-
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
