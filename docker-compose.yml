@@ -26,11 +26,15 @@ services:
     image: "consumer:1.0"
     ports:
       - "9000:8080"
+    depends_on:
+      - kafka
 
   producer:
     image: "producer:1.0"
     ports:
       - "9100:8080"
+    depends_on:
+      - kafka
 
 volumes:
   zookeeper_data:
